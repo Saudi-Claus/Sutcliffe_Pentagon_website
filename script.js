@@ -1,11 +1,11 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 1000; //window.innerWidth
+canvas.width = 1000; //window.innerWidth?
 canvas.height = 1000;
 
 let _numSides = 5;
-let _maxLevels = 2 // Maximum level of recursive depth
+let _maxLevels = 4 // Maximum level of recursive depth
 let _strutFactor = 0.2; // Factor that determines length of inner connections
 let _strutChange = 0.003;
 let _paused = false;
@@ -19,27 +19,31 @@ class PointObj {
 }
 
 function calcMidPoints(point_list) {
-    let modulus = point_list.length
+    const modulus = point_list.length
     let midpoint_array = []
+    let next_i = 0
 
-    for (let i = 0; i < modulus; i ++) {
-        let nexti = (i + 1) % modulus
-        let average_x = (point_list[i].x + point_list[nexti].x)/2
-        let average_y = (point_list[i].y + point_list[nexti].y)/2
+    point_list.forEach((point, i) => {
+        next_i = (i + 1) % modulus
+        let average_x = (point.x + point_list[next_i].x)/2
+        let average_y = (point.y + point_list[next_i].y)/2
         midpoint_array.push(new PointObj(average_x, average_y))
-    }
+    })
+
     return midpoint_array
 }
 
-function calcStrutPoints(midpoints, outerpoints) {
-    let modulus = midpoints.length
+function calcStrutPoints(midpoints, outer_points) {
+    const modulus = midpoints.length
     let strut_array = []
+    let next_i = 0
 
-    for (let i = 0; i < modulus; i ++) {
-        let nexti = (i + (modulus + 1)/2) % modulus 
-        strut_point = calcProjPoint(midpoints[i], outerpoints[nexti])
+    midpoints.forEach((point, i) => {
+        next_i = (i + (modulus + 1)/2) % modulus 
+        strut_point = calcProjPoint(point, outer_points[next_i])
         strut_array.push(strut_point)
-    }
+    })
+
     return strut_array
 }
 
@@ -82,6 +86,7 @@ class Branch {
         this.myBranches = []
         this.level = level
         this.num = num
+        // TODO set Stroke width
         // this.stroke = (_maxlevels - level - 1)/4
 
         if ((this.level + 1) < _maxLevels) {
@@ -99,14 +104,17 @@ class Branch {
     }
 
     drawMe(){
-        for (let i = 0; i < this.outerPoints.length; i++) {
-            let nexti = (i+1) % this.outerPoints.length
-            ctx.beginPath();
-            ctx.moveTo(this.outerPoints[i].x, this.outerPoints[i].y)
-            ctx.lineTo(this.outerPoints[nexti].x , this.outerPoints[nexti].y)
-            //ctx.lineWidth = 
+        let next_i = 0
+
+        this.outerPoints.forEach((outer_point, i) => {
+            next_i = (i+1) % this.outerPoints.length
+            ctx.beginPath()
+            ctx.moveTo(outer_point.x, outer_point.y)
+            ctx.lineTo(this.outerPoints[next_i].x , this.outerPoints[next_i].y)
+            // TODO add change to line width depending on level
+            // ctx.lineWidth = 
             ctx.stroke()
-        }
+        })
 
         for (let k = 0; k < this.myBranches.length; k++) {
             this.myBranches[k].drawMe()
@@ -115,12 +123,9 @@ class Branch {
 }
 
 
-
-// Create an instance of the fractal root object to serve as the base
-let fractal = new FractalRoot();
-
 // Animation loop to continuously redraw the fractal
 function animate() {
+    let fractal = new FractalRoot();
     if (!_paused) {
         fractal.draw();
         _strutFactor += _strutChange; // Slightly alter strut factor for animation
@@ -129,9 +134,9 @@ function animate() {
 }
 
 // Toggle animation on and off
-// function toggleAnimation() {
-//     _paused = !_paused;
-// }
+function toggleAnimation() {
+     _paused = !_paused;
+}
 
 // Download the current canvas image as a PNG
 function downloadImage() {
