@@ -4,10 +4,10 @@ const ctx = canvas.getContext("2d");
 canvas.width = 1000; //window.innerWidth?
 canvas.height = 1000;
 
-let _numSides = 5;
-let _maxLevels = 4 // Maximum level of recursive depth
-let _strutFactor = 0.2; // Factor that determines length of inner connections
-let _strutChange = 0.003;
+let _numSides = 6;
+let _maxLevels = 5
+let _strutFactor = -1; // Factor that determines length of inner connections
+let _strutChange = 0.001;
 let _paused = false;
 
 // Represents a point in 2D space
@@ -38,12 +38,19 @@ function calcStrutPoints(midpoints, outer_points) {
     let strut_array = []
     let next_i = 0
 
-    midpoints.forEach((point, i) => {
+    if (modulus % 2 === 0) {
+        midpoints.forEach((point, i) => {
+        next_i = (i + ((modulus + 1)/2 | 0)) % modulus 
+        strut_point = calcProjPoint(point, midpoints[next_i])
+        strut_array.push(strut_point)
+    })
+    } else {
+        midpoints.forEach((point, i) => {
         next_i = (i + (modulus + 1)/2) % modulus 
         strut_point = calcProjPoint(point, outer_points[next_i])
         strut_array.push(strut_point)
     })
-
+    }
     return strut_array
 }
 
@@ -80,12 +87,13 @@ class FractalRoot {
 
 class Branch {
     constructor(level, num, points) {
+        this.level = level
+        this.num = num
+
         this.outerPoints = points
         this.midPoints = calcMidPoints(points)
         this.projPoints = calcStrutPoints(this.midPoints, points)
         this.myBranches = []
-        this.level = level
-        this.num = num
         // TODO set Stroke width
         // this.stroke = (_maxlevels - level - 1)/4
 
@@ -116,9 +124,9 @@ class Branch {
             ctx.stroke()
         })
 
-        for (let k = 0; k < this.myBranches.length; k++) {
-            this.myBranches[k].drawMe()
-        }
+        this.myBranches.forEach((branch) => {
+            branch.drawMe()
+        })
     }
 }
 
@@ -141,7 +149,7 @@ function toggleAnimation() {
 // Download the current canvas image as a PNG
 function downloadImage() {
     const link = document.createElement("a");
-    link.download = "pentagons.png";
+    link.download = "Sutcliffe_Fractal.png";
     link.href = canvas.toDataURL("image/png");
     link.click();
 }
