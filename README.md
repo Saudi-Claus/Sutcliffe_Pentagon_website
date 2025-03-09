@@ -1,10 +1,11 @@
-This will be a simple website that uses [p5.js](https://p5js.org/) to draw polygons inspired by
-Sutcliffe pentagons.
+This is a website that uses Canvas to draw fractals inspired by Sutcliffe Pentagons. I first heard about these shapes in the book Generative Art [TODO: add link].
 
-## Expected Features
-- Draws shapes
-- Interactive settings to modify shapes
-- downlable shape
-- Hosted on github pages
+## Features:
+- Draws Fractal shapes
+- Button to pause/start
+- Button to Download the image
 
-Wish me luck!
+## Future Features:
+- Host on Github pages
+- Add more buttons for increased customizability
+- Format website layout
