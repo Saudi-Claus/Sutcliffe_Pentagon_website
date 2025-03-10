@@ -4,12 +4,15 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
+let sides_input = document.getElementById("numSidesInput")
+let _numSides = parseInt(sides_input.value, 10)
+
+
 let depth_slider = document.getElementById("depthSlider")
 let depth_value = document.getElementById("depthValueDisplay")
 depth_value.innerHTML = depth_slider.value;
 let _maxLevels = depth_slider.Value
 
-let _numSides = 6;
 let _strutFactor = -1; // Factor that determines length of inner connections
 let _strutChange = 0.001;
 let _paused = false;
@@ -75,8 +78,8 @@ class FractalRoot {
 
         // Generate the corner points for the polygon
         for (let i = 0; i < _numSides; i++) {
-            let x = centerX + 200 * Math.cos(i * angleStep);
-            let y = centerY + 200 * Math.sin(i * angleStep);
+            let x = centerX + 200 * Math.sin(i * angleStep);
+            let y = centerY - 200 * Math.cos(i * angleStep);
             this.points.push(new PointObj(x, y));
         }
         this.rootBranch = new Branch(0,0,this.points);
@@ -143,24 +146,6 @@ function animate() {
         _strutFactor += _strutChange; // Slightly alter strut factor for animation
     }
     requestAnimationFrame(animate); // Request next frame
-}
-
-// Toggle animation on and off
-function toggleAnimation() {
-     _paused = !_paused;
-}
-
-depth_slider.oninput = function() {
-  depth_value.innerHTML = this.value;
-  _maxLevels = this.value;
-}
-
-// Download the current canvas image as a PNG
-function downloadImage() {
-    const link = document.createElement("a");
-    link.download = "Sutcliffe_Fractal.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
 }
 
 // Start animation loop
