@@ -13,7 +13,12 @@
     <h1>Sutcliffe Polygons</h1>
     <button onclick = "toggleAnimation()">Pause/Resume</button>
     <button onclick = "downloadImage()">Download Image</button>
+    <div class = "slidecontainer">
+        <input type = "range" min = "1" max = "7" value = "1" class = "slider" id = "depthSlider">
+        <p>Depth: <span id = "depthValueDisplay"></span></p>
+    </div>
     <canvas id = "canvas"></canvas>
     <script src = "script.js"></script>
+    <script src = "buttons.js"></script>
 </body>
 </html>

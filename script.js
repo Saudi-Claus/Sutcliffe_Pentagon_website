@@ -1,11 +1,15 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 1000; //window.innerWidth?
-canvas.height = 1000;
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
+
+let depth_slider = document.getElementById("depthSlider")
+let depth_value = document.getElementById("depthValueDisplay")
+depth_value.innerHTML = depth_slider.value;
+let _maxLevels = depth_slider.Value
 
 let _numSides = 6;
-let _maxLevels = 5
 let _strutFactor = -1; // Factor that determines length of inner connections
 let _strutChange = 0.001;
 let _paused = false;
@@ -71,8 +75,8 @@ class FractalRoot {
 
         // Generate the corner points for the polygon
         for (let i = 0; i < _numSides; i++) {
-            let x = centerX + 400 * Math.cos(i * angleStep);
-            let y = centerY + 400 * Math.sin(i * angleStep);
+            let x = centerX + 200 * Math.cos(i * angleStep);
+            let y = centerY + 200 * Math.sin(i * angleStep);
             this.points.push(new PointObj(x, y));
         }
         this.rootBranch = new Branch(0,0,this.points);
@@ -146,6 +150,11 @@ function toggleAnimation() {
      _paused = !_paused;
 }
 
+depth_slider.oninput = function() {
+  depth_value.innerHTML = this.value;
+  _maxLevels = this.value;
+}
+
 // Download the current canvas image as a PNG
 function downloadImage() {
     const link = document.createElement("a");
@@ -153,7 +162,6 @@ function downloadImage() {
     link.href = canvas.toDataURL("image/png");
     link.click();
 }
-
 
 // Start animation loop
 animate();
