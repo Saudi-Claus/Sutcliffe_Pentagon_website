@@ -20,5 +20,11 @@ function updateSides() {
 // Depth slider 
 depth_slider.oninput = function() {
   depth_value.innerHTML = this.value;
-  _maxLevels = this.value;
+  _maxLevels = parseInt(this.value,10);
+}
+
+// Strut change factor slider 
+strutChange_slider.oninput = function() {
+  strutChange_value.innerHTML = String(parseInt(this.value,10) / 100000);
+  _strutChange = parseInt(this.value,10) / 100000;
 }

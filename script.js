@@ -13,8 +13,12 @@ let depth_value = document.getElementById("depthValueDisplay")
 depth_value.innerHTML = depth_slider.value;
 let _maxLevels = depth_slider.Value
 
+let strutChange_slider = document.getElementById("strutChangeSlider")
+let strutChange_value = document.getElementById("strutChangeDisplay")
+strutChange_value.innerHTML = strutChange_slider.value / 100000;
+
 let _strutFactor = -1; // Factor that determines length of inner connections
-let _strutChange = 0.001;
+let _strutChange = 0
 let _paused = false;
 
 // Represents a point in 2D space
@@ -143,6 +147,7 @@ function animate() {
     let fractal = new FractalRoot();
     if (!_paused) {
         fractal.draw();
+        console.log(_strutFactor,_strutChange)
         _strutFactor += _strutChange; // Slightly alter strut factor for animation
     }
     requestAnimationFrame(animate); // Request next frame
