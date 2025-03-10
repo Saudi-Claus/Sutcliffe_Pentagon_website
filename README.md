@@ -5,9 +5,12 @@ To visit the website go to: [This link](https://saudi-claus.github.io/Sutcliffe_
 ## Features:
 - Draws Fractal shapes
 - Hosted on Github Pages
-- Button to pause/start
+
+#### Inputs
+- Button to pause/Start
 - Button to Download the image
 - Slider for variable depth
+- Numeric box for number of sides
 
 ## Future Features:
 - Add more buttons for increased customizability
