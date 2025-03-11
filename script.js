@@ -150,6 +150,7 @@ function animate() {
         console.log(_strutFactor,_strutChange)
         _strutFactor += _strutChange; // Slightly alter strut factor for animation
     }
+    // Move the draw outside the if statement!
     requestAnimationFrame(animate); // Request next frame
 }
 
