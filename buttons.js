@@ -25,6 +25,6 @@ depth_slider.oninput = function() {
 
 // Strut change factor slider 
 strutChange_slider.oninput = function() {
-  strutChange_value.innerHTML = String(parseInt(this.value,10) / 100000);
-  _strutChange = parseInt(this.value,10) / 100000;
+  strutChange_value.innerHTML = String(parseInt(this.value,10) / 200000);
+  _strutChange = parseInt(this.value,10) / 200000;
 }
