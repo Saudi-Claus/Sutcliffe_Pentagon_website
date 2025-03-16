@@ -1,3 +1,5 @@
+// Lots of refactoring needed
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -17,7 +19,7 @@ let strutChange_slider = document.getElementById("strutChangeSlider")
 let strutChange_value = document.getElementById("strutChangeDisplay")
 strutChange_value.innerHTML = strutChange_slider.value / 100000;
 
-let _strutFactor = -1; // Factor that determines length of inner connections
+let _strutFactor = 0.2; // Factor that determines length of inner connections
 let _strutChange = 0
 let _paused = false;
 
@@ -146,11 +148,9 @@ class Branch {
 function animate() {
     let fractal = new FractalRoot();
     if (!_paused) {
-        fractal.draw();
-        console.log(_strutFactor,_strutChange)
         _strutFactor += _strutChange; // Slightly alter strut factor for animation
     }
-    // Move the draw outside the if statement!
+    fractal.draw();
     requestAnimationFrame(animate); // Request next frame
 }
 
