@@ -15,3 +15,5 @@ To visit the website go to: [This link](https://saudi-claus.github.io/Sutcliffe_
 ## Future Features:
 - Add more buttons for increased customizability
 - Format website layout
+- Allow non regular shapes and patterns
+- Allow users to create their shapes
