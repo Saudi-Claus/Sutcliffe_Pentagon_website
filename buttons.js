@@ -1,4 +1,3 @@
-
 // Pause button
 function toggleAnimation() {
      _paused = !_paused;
