@@ -2,7 +2,6 @@
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
@@ -82,7 +81,7 @@ class FractalRoot {
         let centerY = canvas.height / 2;
         let angleStep = (2 * Math.PI) / _numSides;
 
-        // Generate the corner points for the polygon
+        // Generate the corner points for the main polygon
         for (let i = 0; i < _numSides; i++) {
             let x = centerX + 200 * Math.sin(i * angleStep);
             let y = centerY - 200 * Math.cos(i * angleStep);
